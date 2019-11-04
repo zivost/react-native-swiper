@@ -15,6 +15,8 @@ import {
   ActivityIndicator
 } from 'react-native'
 
+import VertViewPager from 'react-native-vertical-view-pager'
+
 /**
  * Default styles
  * @type {StyleSheetPropType}
@@ -773,21 +775,44 @@ export default class extends Component {
   }
 
   renderScrollView = pages => {
-    return (
-      <ScrollView
-        ref={this.refScrollView}
-        {...this.props}
-        {...this.scrollViewPropOverrides()}
-        contentContainerStyle={[styles.wrapperIOS, this.props.style]}
-        contentOffset={this.state.offset}
-        onScrollBeginDrag={this.onScrollBegin}
-        onMomentumScrollEnd={this.onScrollEnd}
-        onScrollEndDrag={this.onScrollEndDrag}
-        style={this.props.scrollViewStyle}
-      >
-        {pages}
-      </ScrollView>
-    )
+    if (Platform.OS === 'ios') {
+      return (
+        <ScrollView
+          ref={this.refScrollView}
+          {...this.props}
+          {...this.scrollViewPropOverrides()}
+          contentContainerStyle={[styles.wrapperIOS, this.props.style]}
+          contentOffset={this.state.offset}
+          onScrollBeginDrag={this.onScrollBegin}
+          onMomentumScrollEnd={this.onScrollEnd}
+          onScrollEndDrag={this.onScrollEndDrag}
+          style={this.props.scrollViewStyle}
+        >
+          {pages}
+        </ScrollView>
+      )
+    }
+
+    return this.props.horizontal === false?
+             <VertViewPager ref={this.refScrollView}
+                            {...this.props}
+                            initialPage={this.props.loop ? this.state.index + 1 : this.state.index}
+                            onPageSelected={this.onScrollEnd}
+                            onMomentumScrollEnd={this.onScrollEnd}
+                            key={pages.length}
+                            style={StyleSheet.flatten([styles.wrapperAndroid, this.props.style])}>
+               {pages}
+             </VertViewPager>:
+             <ViewPagerAndroid ref={this.refScrollView}
+                               {...this.props}
+                               initialPage={this.props.loop ? this.state.index + 1 : this.state.index}
+                               onPageSelected={this.onScrollEnd}
+                               onMomentumScrollEnd={this.onScrollEnd}
+                               key={pages.length}
+                               style={[styles.wrapperAndroid, this.props.style]}>
+               {pages}
+             </ViewPagerAndroid>
+    
   }
 
   /**
