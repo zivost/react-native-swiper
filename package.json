@@ -1,11 +1,11 @@
 {
-  "name": "react-native-swiper",
+  "name": "@nigharsh/react-native-swiper",
   "keywords": [
     "react-component",
     "react-native",
     "ios"
   ],
-  "version": "1.6.0-nightly.4",
+  "version": "1.5.15",
   "description": "Swiper component for React Native.",
   "main": "index.js",
   "scripts": {
@@ -44,7 +44,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leecade/react-native-swiper.git"
+    "url": "git+https://github.com/zivost/react-native-swiper.git"
   },
   "author": "",
   "license": "MIT",
